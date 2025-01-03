@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>Track Me</button>
+    <script>
+        // AJAX:- Asynchronous Javascript and XML
+        // Takes time to excute and it stay inside the callback queue.
+        // This is not a part of javascript. it is a part of synchronous.
+        // Rest Api:- Representational state tranfer Application Pragromming Interface
+
+    const btn = document.querySelector("button")
+    function trackHandler(){
+    // navigator is a object which has a geolocation method inside the geoloaction method object getCurrentPosition()
+    // is used to get the current position with langitude and longitude. getCurrentPosition() has two parameter One has 
+    // for given permission and another has reject the permission by the user.
+     navigator.geolocation.getCurrentPosition((resolve)=>{
+        setTimeout(()=>{
+            console.log(resolve.coords.latitude,resolve.coords.longitude) // gives the langitude and longitude
+        },2000)
+     },(reject)=>{
+        console.log(reject.message)
+     })
+    }
+    console.log("Getting Loaded...")
+    btn.addEventListener("click" ,trackHandler)
+    </script>
+</body>
+</html>

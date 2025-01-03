@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>Track Me</button>
+    <script>
+        //Promise:- Is is a placeholder which is used for future result.
+        // const promise  = new Promise((reslove,reject)={})
+        // resolve and reject is also a function.
+        // To handle the promise result we use then(()=>{}) and catch(()=>{})
+        // If the promise is resolve then then(()=>{}) will handel the success result
+        // If the promise is reject then catch(()=>{}) will handel the error result.
+        // To avoid the callback hell we use promise.
+
+        // const promise = new Promise((resolve,reject)=>{
+        //     const randomNumber = Math.random()
+        //     console.log(randomNumber)
+        //     if(randomNumber>=0.5){
+        //         resolve("DONE")
+        //     }else{
+        //         reject("Better Luck Next Time")
+        //     }
+        // })
+        // // This is giving the promise Object. To handel the result we use then() and catch()
+        // console.log(promise)
+        // promise.then((data)=>{
+        //     console.log(data)
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
+
+
+        ///////////////////////////////////////////
+        // Geolocation using promise
+        // const btn = document.querySelector("button")
+        // const timer = (duration)=>{
+        //   const promise = new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         resolve("Done")
+        //     },duration)
+        //   })
+        //   return promise
+        // }
+        // const handel = ()=>{
+        //     let promise = new Promise((resolve,reject)=>{
+        //      navigator.geolocation.getCurrentPosition((resolved)=>{
+        //        resolve(resolved)
+        //     },(rejected)=>{
+        //         reject(rejected)
+        //     })
+        //     })
+        //     return promise
+        // }
+        // function handler(){
+        //     // navigator.geolocation.getCurrentPosition((posData)=>{
+        //     // //   setTimeout(()=>{
+        //     // //     console.log(resolve)
+        //     // //   },2000)
+        //     // timer(2000).then((resolve)=>{console.log(posData)})
+        //     // },(reject)=>{
+        //     //     console.log(reject)
+        //     // })
+        //     let positionData;
+        //     handel().then((resolved)=>{
+        //         positionData = resolved
+        //         return timer(2000)
+        //     }).then((timerData)=>{
+        //         console.log(timerData, positionData)
+        //     }).catch((err)=>{
+        //         console.log(err)
+        //     })
+        //     // setTimeout(()=>{
+        //     //     console.log("Getting Position...")
+        //     // },0)
+        //     // instead of this 
+        //     timer(0).then((data)=>{console.log("getting position...")})
+        // }
+        // btn.addEventListener("click", handler)
+        ///////////////////////////////////////////////////////////////////////
+        // To achieve this using Async and await.
+        // Drawback:- when will use async and await then async makes a synchronous to asynchronous and
+        // await will take a time to execute first then next line will execute.
+        // await doesn't give the priority to the synchronous code. 
+        const btn = document.querySelector("button")
+        const timer = (duration)=>{
+            const promise = new Promise((resolve,reject)=>{
+                setTimeout((data)=>{
+                    resolve("done")
+                },duration)
+            })
+            return promise;
+        }
+        const handel = ()=>{
+            const promise = new Promise((resolve,reject)=>{
+                navigator.geolocation.getCurrentPosition((success)=>{
+                    resolve(success)
+                },(failed)=>{
+                    reject(failed)
+                })
+            })
+            return promise;
+        }
+        async function handler(){
+            let posData;
+            let time;
+           try{
+             posData = await handel() // first it will execute until it wait.
+             time = await timer(2000)
+           }catch(err){ //catch() is not a function it is block to catch the error for every callback.
+            posData = err.message
+            time = "invalid"
+            console.log(err)
+           }
+           console.log(time,posData)
+           console.log("getting position...")
+        }
+        btn.addEventListener("click", handler)
+    </script> 
+</body>
+</html>
